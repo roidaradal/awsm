@@ -13,12 +13,13 @@ import (
 )
 
 type UploadConfig struct {
-	Profile    string
-	Region     string
-	Bucket     string
-	FilePath   string
-	BucketPath string
-	ACL        types.ObjectCannedACL
+	Profile     string
+	Region      string
+	Bucket      string
+	FilePath    string
+	BucketPath  string
+	ACL         types.ObjectCannedACL
+	ContentType string
 }
 
 // Upload file to S3 bucket
@@ -48,14 +49,20 @@ func UploadFile(cfg *UploadConfig) error {
 
 	// Upload file
 	_, err = uploader.Upload(context.TODO(), &s3.PutObjectInput{
-		Bucket: &cfg.Bucket,
-		Key:    &cfg.BucketPath,
-		Body:   file,
-		ACL:    cfg.ACL,
+		Bucket:      &cfg.Bucket,
+		Key:         &cfg.BucketPath,
+		Body:        file,
+		ACL:         cfg.ACL,
+		ContentType: &cfg.ContentType,
 	})
 	if err != nil {
 		return fmt.Errorf("failed to upload file %q to S3: %w", cfg.FilePath, err)
 	}
 
 	return nil
+}
+
+// Get the output URL of the uploaded item
+func (cfg UploadConfig) PublicURL() string {
+	return fmt.Sprintf("https://%s.s3.%s.amazonaws.com/%s", cfg.Bucket, cfg.Region, cfg.BucketPath)
 }
