@@ -1,3 +1,6 @@
+v0.1.1 - Change Package Name 
+    x Commit: 2025-12-02 10:48
+    x Update package name to awsm
 v0.1.0 - Upload File to Bucket
     x Commit: 2025-12-02 10:33
     x UploadConfig struct 

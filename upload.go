@@ -1,4 +1,4 @@
-package main
+package awsm
 
 import (
 	"context"

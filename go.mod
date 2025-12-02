@@ -1,4 +1,4 @@
-module github.com/roidaradal/aws
+module github.com/roidaradal/awsm
 
 go 1.25.4
 
